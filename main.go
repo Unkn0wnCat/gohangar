@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/Unkn0wnCat/gohangar/hangar"
 	"github.com/urfave/cli/v2"
 	"html/template"
@@ -57,6 +58,17 @@ func main() {
 				Value: "GoHangar",
 				Usage: "App name displayed in the footer",
 			},
+			&cli.StringFlag{
+				Name:    "port",
+				Aliases: []string{"p"},
+				Value:   "8123",
+				Usage:   "Port to listen on",
+			},
+			&cli.StringFlag{
+				Name:  "address",
+				Value: "0.0.0.0",
+				Usage: "Address to listen on",
+			},
 		},
 		Action: func(cCtx *cli.Context) error {
 			base := os.DirFS(cCtx.String("dir"))
@@ -72,7 +84,10 @@ func main() {
 			myHangar.Banner = cCtx.String("header")
 			myHangar.SiteName = cCtx.String("name")
 
-			err = http.ListenAndServe("localhost:8123", myHangar)
+			listen := fmt.Sprintf("%s:%s", cCtx.String("address"), cCtx.String("port"))
+
+			log.Printf("Listening on %s...", listen)
+			err = http.ListenAndServe(listen, myHangar)
 			if err != nil {
 				return err
 			}
