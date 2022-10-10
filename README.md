@@ -17,7 +17,7 @@ program provides a simple directory list for setting up a simple downloadbase.
 ## Installation
 
 Either download a binary from the releases page, or if you have Golang installed type
-`go install github.com/Unkn0wnCat/gohangar` into your terminal.
+`go install github.com/Unkn0wnCat/gohangar@latest` into your terminal.
 
 ## Special Thanks
 
