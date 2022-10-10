@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US" xml:lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.SiteName}}</title>
+    <link rel="author" href="{{.SiteName}}" />
+    <meta name="description" content="{{.SiteName}} {{.AppName}}" />
+    <meta name="keywords" content="DirList,download,downloadbase,dlbase,gohangar,{{.AppName}}" />
+    <link rel="stylesheet" href="/static/black.css">
+</head>
+<body>
+<center>
+    {{if not .NoHeader}}
+        <a href="/"><img alt="{{.AppName}}" src="{{.Banner}}" width="550px" height="auto" class="banner"></a>
+    {{end}}
+    <div class="dlbase">
+        {{if .Readme}}
+            <div class="headertext">~ README ~</div><iframe class="readme" src="{{.Readme}}"></iframe>
+        {{end}}
+        <div class="headertext">~ {{.SiteName}} ~</div>
+        {{if and (gt (len .Path) 0) (not (eq (index .Path 0) "."))}}
+            <div class="dirup"><a href=".."><img alt="dirup" src="/static/images/arrow_up.gif" width="16px" height="16px"> ..</a></div>
+        {{end}}
+        {{range .Entries}}
+            <div class="content"><a href="{{.AbsolutePath}}" title="{{.Name}}"><img alt="File" src="{{.Icon}}" width="16px" height="16px"> {{.Name}}</a></div>
+        {{end}}
+    </div>
+    <ul class="breadcrumb">
+        <li><a href="/">root</a></li>
+        {{$myPath := ""}}
+        {{range .Path}}
+            {{if not (eq . ".")}}
+                {{$myPath = print $myPath "/" .}}
+                <li><a href="{{$myPath}}">{{.}}</a></li>
+            {{end}}
+        {{end}}
+    </ul>
+</center>
+<p>{{.SiteName}} {{.Attribution}}</p>
+</body>
+</html>
